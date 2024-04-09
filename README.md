@@ -60,6 +60,7 @@ POST lists/{게시글 번호}/comment/write
 - openJDK 17
 - Spring boot 3.2.4
 - sprint data jpa
+- Thymeleaf
 
 ## 사용 DB
 - MYSQL
