@@ -5,14 +5,18 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+
+/**
+ * 추후 AUDITION을 통해 생성일도 추가 필요
+ */
 @Entity
 @Getter @Setter
-@Table(name = "USERS_POST")
-public class UsersPost {
+@Table(name = "MEMBER_POST")
+public class MemberPost {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "USERS_POST_ID")
+    @Column(name = "MEMBER_POST_ID")
     private Long id;
 
     @Column(name = "POST_NUMBER")
@@ -27,13 +31,13 @@ public class UsersPost {
 
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "USERS_ID")
-    private User postUser;
+    @JoinColumn(name = "MEMBER_ID")
+    private Member postMember;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "USERS_COMMENT_ID")
-    private UsersComment postComment;
+    @JoinColumn(name = "MEMBER_COMMENT_ID")
+    private MemberComment postComment;
 
 
 }

@@ -9,7 +9,7 @@ package com.schiot.community.entity.enums;
  BACHELOR: 졸업생 (학사이상)
  PROFESSOR: 교수
  */
-public enum UserStatus {
+public enum MemberStatus {
 
     FRESHMAN("1학년"),
     SOPHOMORE("2학년"),
@@ -20,7 +20,7 @@ public enum UserStatus {
 
     private final String message;
 
-    UserStatus(String message){
+    MemberStatus(String message){
         this.message = message;
     }
     public String getMessage(){
