@@ -2,8 +2,7 @@ package com.schiot.community.entity;
 
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 
 /**
@@ -11,6 +10,9 @@ import lombok.Setter;
  */
 @Entity
 @Getter @Setter
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
 @Table(name = "MEMBER_POST")
 public class MemberPost {
 
