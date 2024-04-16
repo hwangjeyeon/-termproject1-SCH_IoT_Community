@@ -22,7 +22,7 @@ public class MemberPost {
     private Long id;
 
     @Column(name = "POST_NUMBER")
-    private String postNumber;
+    private Integer postNumber;
     @Column(name = "POST_TITLE")
     private String postTitle;
     @Column(name = "POST_VIEW")
