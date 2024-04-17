@@ -52,6 +52,7 @@ public class certificationController {
 
     @PostMapping("/register")
     public String register(@ModelAttribute("registerForm") RegisterForm registerForm){
+        log.info("{} {}",registerForm.getMemberId(),registerForm.getMemberPassword());
         if(!registerService.RegisterCheck(registerForm)){
             return "redirect:/register";
         }
