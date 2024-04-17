@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCH-IoT 커뮤니티 - 로그인</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #f0f0f0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        form {
+            width: 300px;
+            margin: 50px auto;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        button[type="submit"] {
+            background-color: #28a745;
+        }
+    </style>
+</head>
+<body>
+    <!-- 상단 부분 -->
+    <header>
+        <h1>SCH-IoT 커뮤니티 - 로그인</h1>
+    </header>
+
+    <!-- 로그인 폼 -->
+    <form th:action="@{/login}" th:object="${loginform}" method="post">
+        <div>
+            <label for="memberId">아이디</label>
+            <input type="text" id="memberId" name="memberId" th:field="*{memberId}">
+        </div>
+        <div>
+            <label for="memberPassword">비밀번호</label>
+            <input type="password" id="memberPassword" name="memberPassword" th:field="*{memberPassword}">
+        </div>
+        <button type="submit">로그인</button>
+        <button type="button" th:onclick="|location.href='@{/register}'|">회원가입</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCH-IoT 커뮤니티 - 글 작성</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #f0f0f0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        form {
+            width: 600px;
+            margin: 50px auto;
+            position: relative; /* 부모 요소로 설정 */
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        .back-button {
+            position: absolute; /* 절대 위치 */
+            bottom: 0;
+            right: 120px; /* 작성 완료 버튼의 우측에 위치 */
+            margin-bottom: 20px;
+        }
+
+        .username {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 상단 부분 -->
+    <header>
+        <h1>SCH-IoT 커뮤니티 - 글 작성</h1>
+        <!-- 사용자명 -->
+        <div class="username">
+            사용자명: <span id="username">이름</span>
+        </div>
+    </header>
+
+    <!-- 글 작성 폼 -->
+    <form>
+        <label for="title">제목</label>
+        <input type="text" id="title" name="title">
+
+        <label for="content">내용</label>
+        <textarea id="content" name="content" rows="8"></textarea>
+
+        <button type="submit">작성 완료</button>
+
+        <!-- 뒤로가기 버튼 -->
+        <button class="back-button" onclick="window.history.back()">뒤로가기</button>
+    </form>
+
+    
+</body>
+</html>
