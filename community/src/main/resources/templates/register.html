@@ -6,20 +6,51 @@
     <title>SCH-IoT 커뮤니티</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
 
-        header {
-            background-color: #f0f0f0;
-            padding: 20px;
-            text-align: center;
-        }
+    header {
+        background-color: #f0f0f0;
+        padding: 20px;
+        text-align: center;
+    }
 
-        h1 {
-            margin: 0;
-        }
+    h1 {
+        margin: 0;
+    }
+
+    form {
+        width: 300px;
+        margin: 50px auto;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    select {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 15px;
+        box-sizing: border-box;
+    }
+
+    button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+    }
+
+    button[type="submit"] {
+        background-color: #28a745;
+    }
     </style>
 </head>
 <body>
@@ -36,7 +67,7 @@
         </div>
         <div>
             <label for="memberPassword">비밀번호</label>
-            <input type="pasword" id="memberPassword" name="memberPassword" th:field="*{memberPassword}">
+            <input type="password" id="memberPassword" name="memberPassword" th:field="*{memberPassword}">
         </div>
         <div>
             <label for="studentId">학번</label>
