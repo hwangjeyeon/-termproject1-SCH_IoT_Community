@@ -19,9 +19,8 @@ public class RegisterService {
 
     public boolean RegisterCheck(RegisterForm registerForm){
         List<Member> findByMemberId = memberRepository.findByMemberId(registerForm.getMemberId());
-        List<Member> findByMemberPassword = memberRepository.findByMemberPassword(registerForm.getMemberPassword());
         List<Member> findByStudentId = memberRepository.findByStudentId(registerForm.getStudentId());
-        if(!findByMemberId.isEmpty() || !findByMemberPassword.isEmpty() || !findByStudentId.isEmpty()){
+        if(!findByMemberId.isEmpty() || !findByStudentId.isEmpty()){
             return false;
         }
         Member registerMember = Member.builder()
