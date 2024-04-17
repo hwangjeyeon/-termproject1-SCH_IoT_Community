@@ -26,7 +26,7 @@ public class Member {
     @Column(name = "MEMBER_PASSWORD")
     private String memberPassword;
     @Column(name = "STUDENT_ID")
-    private String StudentId;
+    private String studentId;
 
     @Column(name = "MEMBER_STATUS")
     @Enumerated(EnumType.STRING)

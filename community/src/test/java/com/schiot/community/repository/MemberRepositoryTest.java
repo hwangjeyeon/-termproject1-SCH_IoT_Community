@@ -26,7 +26,7 @@ class MemberRepositoryTest {
         Member member = Member.builder().id(1L)
                 .memberId("hwang")
                 .memberPassword("jeyeon")
-                .StudentId("20191511")
+                .studentId("20191511")
                 .memberStatus(MemberStatus.SENIOR)
                 .build();
         memberRepository.save(member);
