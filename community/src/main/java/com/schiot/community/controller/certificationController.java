@@ -4,6 +4,8 @@ import com.schiot.community.form.LoginForm;
 import com.schiot.community.form.RegisterForm;
 import com.schiot.community.service.LoginService;
 import com.schiot.community.service.RegisterService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -11,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 @Controller
 @RequiredArgsConstructor
@@ -33,13 +36,14 @@ public class certificationController {
     }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute("loginform") LoginForm loginForm) {
-        log.info("{} {}",loginForm.getMemberId(),loginForm.getMemberPassword());
-        // 에러를 폼에 담아서 처리할 것
+    public String login(@ModelAttribute("loginform") LoginForm loginForm, HttpServletRequest request) {
         if(!loginService.loginCheckService(loginForm)){
             return "redirect:/login";
         }
-        log.info("로그 성공");
+
+        HttpSession session = request.getSession();
+        session.setAttribute("loginMember", loginService.loginSessionService(loginForm));
+
         return "redirect:/writelist";
     }
 
@@ -58,12 +62,6 @@ public class certificationController {
         }
         log.info("{} 등록", registerForm.getStudentId());
         return "redirect:/login";
-    }
-
-    @GetMapping("/writelist")
-    public String writeList(){
-
-        return "writelist";
     }
 
 

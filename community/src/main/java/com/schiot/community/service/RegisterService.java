@@ -21,6 +21,7 @@ public class RegisterService {
         List<Member> findByMemberId = memberRepository.findByMemberId(registerForm.getMemberId());
         List<Member> findByStudentId = memberRepository.findByStudentId(registerForm.getStudentId());
         if(!findByMemberId.isEmpty() || !findByStudentId.isEmpty()){
+            log.info("중복된 회원가입 정보 입력");
             return false;
         }
         Member registerMember = Member.builder()
@@ -30,6 +31,7 @@ public class RegisterService {
                 .memberStatus(registerForm.getMemberStatus())
                 .build();
         memberRepository.save(registerMember);
+        log.info("회원가입 성공!");
         return true;
     }
 
