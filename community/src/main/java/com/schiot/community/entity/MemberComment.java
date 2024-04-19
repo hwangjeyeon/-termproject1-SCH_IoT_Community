@@ -9,7 +9,7 @@ import lombok.*;
  * 추후 AUDITION을 통해 생성일도 추가 필요
  */
 @Entity
-@Getter @Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
