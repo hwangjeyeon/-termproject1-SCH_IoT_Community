@@ -20,6 +20,15 @@ public class WriteContentService {
         return memberPostRepository.findAll();
     }
 
+    public MemberPost getMemberPostContent(Integer postNumber, String studentId){
+        List<MemberPost> memberPosts = memberPostRepository.findByPostNumberAndPostMember_StudentId(postNumber, studentId);
+        return memberPosts.get(0);
+    }
+
+    public void increaseView(MemberPost memberPost){
+        memberPost.increaseView();
+        memberPostRepository.save(memberPost);
+    }
 
 
 }
