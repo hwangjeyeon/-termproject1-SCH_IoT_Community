@@ -47,8 +47,7 @@
 <body>
     <!-- Header 영역 -->
     <div class="header">
-        <div>로그인 사용자: 이름</div>
-        <button>글작성</button>
+        <button th:onclick="|location.href='@{/write/{studentId}(studentId=${member.studentId}, password=${member.memberPassword})}'|">글작성</button>
     </div>
 
     <!-- 게시글 리스트 영역 -->
@@ -66,7 +65,9 @@
             <!-- Thymeleaf를 사용하여 동적으로 게시글 리스트를 추가합니다 -->
             <tr th:each="post : ${posts}">
                 <td th:text="${post.postNumber}"></td>
-                <td th:text="${post.postTitle}"></td>
+                <td>
+                    <a th:text="${post.postTitle}" th:href="@{/content/{postNumber}(postNumber=${post.postNumber}, studentId=${post.postMember.studentId})}"></a>
+                </td>
                 <td th:text="${post.postMember.getStudentId()}"></td>
                 <td th:text="${post.postView}"></td>
 <!--                <td th:text="${post.createdDate}"></td>-->
