@@ -47,44 +47,40 @@
             border: none;
             cursor: pointer;
         }
-
         .back-button {
-            position: absolute; /* 절대 위치 */
-            bottom: 0;
-            right: 120px; /* 작성 완료 버튼의 우측에 위치 */
-            margin-bottom: 20px;
+            padding: 10px 20px;
+            background-color: #6c757d; /* 회색으로 변경 */
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            vertical-align: top; /* 버튼을 submit 버튼과 수직 정렬되도록 설정 */
         }
 
-        .username {
-            text-align: center;
-            margin-top: 20px;
-        }
     </style>
 </head>
 <body>
     <!-- 상단 부분 -->
     <header>
         <h1>SCH-IoT 커뮤니티 - 글 작성</h1>
-        <!-- 사용자명 -->
-        <div class="username">
-            사용자명: <span id="username">이름</span>
-        </div>
     </header>
 
     <!-- 글 작성 폼 -->
-    <form>
-        <label for="title">제목</label>
-        <input type="text" id="title" name="title">
-
-        <label for="content">내용</label>
-        <textarea id="content" name="content" rows="8"></textarea>
-
+    <form th:action="@{/write}" method="post" th:object="${writeform}">
+        <div>
+            <label for="title">제목</label>
+            <input type="text" id="title" name="title" th:field="*{title}">
+        </div>
+        <div>
+            <label for="content">내용</label>
+            <textarea id="content" name="content" rows="8" th:field="*{content}"></textarea>
+        </div>
         <button type="submit">작성 완료</button>
 
         <!-- 뒤로가기 버튼 -->
-        <button class="back-button" onclick="window.history.back()">뒤로가기</button>
+        <button type="button" class="back-button" th:onclick="|location.href='/writelist'|">뒤로가기</button>
     </form>
 
+    
     
 </body>
 </html>
