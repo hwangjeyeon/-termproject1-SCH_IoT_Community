@@ -70,7 +70,7 @@
                 </td>
                 <td th:text="${post.postMember.getStudentId()}"></td>
                 <td th:text="${post.postView}"></td>
-<!--                <td th:text="${post.createdDate}"></td>-->
+                <td th:text="${#temporals.format(post.createdDate, 'yyyy.MM.dd')}"></td>
             </tr>
         </tbody>
     </table>

@@ -77,7 +77,7 @@
             <label for="memberStatus">학년</label>
             <select id="memberStatus" name="memberStatus" th:field="*{memberStatus}">
                 <option th:each="status : ${T(com.schiot.community.entity.enums.MemberStatus).values()}"
-                        th:value="${status}" th:text="${status.name()}"></option>
+                        th:value="${status}" th:text="${status.getMessage()}"></option>
             </select>
         </div>
         <button type="submit">가입</button>

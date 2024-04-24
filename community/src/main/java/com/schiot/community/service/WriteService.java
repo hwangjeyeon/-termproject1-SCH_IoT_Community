@@ -1,8 +1,11 @@
 package com.schiot.community.service;
 
 import com.schiot.community.entity.Member;
+import com.schiot.community.entity.MemberComment;
 import com.schiot.community.entity.MemberPost;
+import com.schiot.community.form.CommentForm;
 import com.schiot.community.form.WriteForm;
+import com.schiot.community.repository.MemberCommentRepository;
 import com.schiot.community.repository.MemberPostRepository;
 import com.schiot.community.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,11 +21,7 @@ public class WriteService {
 
     private final MemberRepository memberRepository;
     private final MemberPostRepository memberPostRepository;
-
-    public Member getWriteMember(String studentId, String password){
-        List<Member> member = memberRepository.findByStudentIdAndMemberPassword(studentId, password);
-        return member.get(0);
-    }
+    private final MemberCommentRepository memberCommentRepository;
 
     public boolean writeFormCheck(WriteForm form){
         if(form.getContent() == null || form.getTitle() == null
@@ -47,6 +46,25 @@ public class WriteService {
                 .postNumber((int)memberPostRepository.count()+1)
                 .build();
         memberPostRepository.save(memberPost);
+    }
+
+    public boolean commentFormCheck(CommentForm form){
+        if(form.getContent() == null
+                || form.getContent().isEmpty()
+                || form.getContent().isBlank()){
+            return false;
+        }
+        return true;
+    }
+
+    public void uploadComment(CommentForm form, MemberPost memberPost){
+        MemberComment memberComment = MemberComment.builder()
+                .commentsMember(memberPost.getPostMember())
+                .commentsPost(memberPost)
+                .commentContent(form.getContent())
+                .build();
+        log.info("{}", memberComment.getCommentContent());
+        memberCommentRepository.save(memberComment);
     }
 
 

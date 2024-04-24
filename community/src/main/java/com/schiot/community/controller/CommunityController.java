@@ -3,7 +3,9 @@ package com.schiot.community.controller;
 
 
 import com.schiot.community.entity.Member;
+import com.schiot.community.entity.MemberComment;
 import com.schiot.community.entity.MemberPost;
+import com.schiot.community.form.CommentForm;
 import com.schiot.community.form.WriteForm;
 import com.schiot.community.service.UsingMemberSessionService;
 import com.schiot.community.service.WriteContentService;
@@ -15,6 +17,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
+
+import java.util.List;
 
 @Controller
 @Slf4j
@@ -40,15 +44,20 @@ public class CommunityController {
 
     @GetMapping("/content/{postNumber}")
     public String memberContent(@PathVariable Integer postNumber,
-                                @RequestParam(name = "studentId", required = false) String studentId,
+                                @RequestParam(name = "studentId") String studentId,
                                 Model model){
         MemberPost memberPost = writeContentService.getMemberPostContent(postNumber, studentId);
+        List<MemberComment> memberCommentList = writeContentService.getPostComments(memberPost);
         model.addAttribute("posts",memberPost);
+        model.addAttribute("comments", memberCommentList);
+        model.addAttribute("commentform", new CommentForm());
         writeContentService.increaseView(memberPost);
 
 
         return "writecontent";
     }
+
+
 
     // 인증 관문
     @GetMapping("/write/{studentId}")
@@ -79,6 +88,22 @@ public class CommunityController {
         writeService.uploadWriteContent(writeForm, usingMemberSessionService.
                 getSessionMember((Member)request.getSession().getAttribute("loginMember")));
         return "redirect:/writelist";
+    }
+
+    @PostMapping("/content/{postNumber}/comment")
+    public String memberComment(
+            @PathVariable Integer postNumber,
+            @RequestParam(name = "studentId") String studentId,
+            @ModelAttribute("commentform") CommentForm commentForm){
+        log.info("{}", commentForm.getContent());
+        if(!writeService.commentFormCheck(commentForm)){
+            log.info("댓글 내용이 없으면 안 됩니다.");
+            return "redirect:/content/" + postNumber +"?studentId=" + studentId;
+        }
+        MemberPost memberPost = writeContentService.getMemberPostContent(postNumber, studentId);
+        writeService.uploadComment(commentForm, memberPost);
+        log.info("댓글 등록 완료, 내용 = {}", commentForm.getContent());
+        return "redirect:/content/" + postNumber +"?studentId=" + studentId;
     }
 
 
