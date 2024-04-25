@@ -42,12 +42,19 @@
             background-color: #f2f2f2;
             color: #333;
         }
+        #logout {
+            background-color: #FF0B0BFF;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
     <!-- Header 영역 -->
     <div class="header">
-        <button th:onclick="|location.href='@{/write/{studentId}(studentId=${member.studentId}, password=${member.memberPassword})}'|">글작성</button>
+        <button th:onclick="|location.href='@{/write}'|">글작성</button>
+        <button id="logout" th:onclick="|location.href='@{/logout}'|">로그아웃</button>
     </div>
 
     <!-- 게시글 리스트 영역 -->

@@ -4,7 +4,9 @@ import com.schiot.community.form.LoginForm;
 import com.schiot.community.form.RegisterForm;
 import com.schiot.community.service.LoginService;
 import com.schiot.community.service.RegisterService;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -63,6 +65,14 @@ public class CertificationController {
         return "redirect:/login";
     }
 
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request){
+        HttpSession session = request.getSession(false);
+        if(session != null){
+            session.invalidate();
+        }
 
+        return "redirect:/login";
+    }
 
 }
