@@ -14,6 +14,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+
+/**
+ * 게시글 CRUD 서비스 (업로드, 삭제, 수정, 검증 등)
+ */
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -57,14 +62,25 @@ public class WriteService {
         return true;
     }
 
-    public void uploadComment(CommentForm form, MemberPost memberPost){
+    public void uploadComment(CommentForm form, MemberPost memberPost, Member member){
         MemberComment memberComment = MemberComment.builder()
-                .commentsMember(memberPost.getPostMember())
+                .commentsMember(member)
                 .commentsPost(memberPost)
                 .commentContent(form.getContent())
                 .build();
         log.info("{}", memberComment.getCommentContent());
         memberCommentRepository.save(memberComment);
+    }
+
+    public void deleteContent(Integer postNumber, String studentId){
+        List<MemberPost> memberPost = memberPostRepository.findByPostNumberAndPostMember_StudentId(postNumber, studentId);
+        memberPostRepository.delete(memberPost.get(0));
+    }
+
+    public void deleteComment(Integer postNumber, Long commentId){
+        List<MemberComment> postComment = memberCommentRepository.findByCommentsPost_PostNumberAndId(postNumber, commentId);
+        log.info("{} ??", postComment.get(0));
+        memberCommentRepository.delete(postComment.get(0));
     }
 
 

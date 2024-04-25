@@ -4,6 +4,8 @@ package com.schiot.community.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 
 /**
  * 추후 AUDITION을 통해 생성일도 추가 필요
@@ -37,9 +39,8 @@ public class MemberPost extends BaseEntity{
     private Member postMember;
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "MEMBER_COMMENT_ID")
-    private MemberComment postComment;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<MemberComment> postComment;
 
 
     public void increaseView(){

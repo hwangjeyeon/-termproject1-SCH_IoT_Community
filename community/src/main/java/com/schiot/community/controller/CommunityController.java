@@ -29,8 +29,6 @@ public class CommunityController {
     private final UsingMemberSessionService usingMemberSessionService;
     private final WriteService writeService;
 
-    //TODO: 사용자가 작성할 글 정보 post 컨트롤러 구현 및 저장 서비스 구현, 게시글 번호를 게시글 전체 수 + 1로 저장하는 기능 구현
-
     @GetMapping("/writelist")
     public String writeList(Model model, HttpServletRequest request) {
         model.addAttribute("posts",writeContentService.getWriteContent());
@@ -45,31 +43,18 @@ public class CommunityController {
     @GetMapping("/content/{postNumber}")
     public String memberContent(@PathVariable Integer postNumber,
                                 @RequestParam(name = "studentId") String studentId,
-                                Model model){
+                                Model model,HttpServletRequest request){
         MemberPost memberPost = writeContentService.getMemberPostContent(postNumber, studentId);
-        List<MemberComment> memberCommentList = writeContentService.getPostComments(memberPost);
+
         model.addAttribute("posts",memberPost);
-        model.addAttribute("comments", memberCommentList);
+        model.addAttribute("comments", writeContentService.getPostComments(memberPost));
         model.addAttribute("commentform", new CommentForm());
+        model.addAttribute("member",  usingMemberSessionService.getSessionMember
+                ((Member)request.getSession().getAttribute("loginMember")));
         writeContentService.increaseView(memberPost);
 
 
         return "writecontent";
-    }
-
-
-
-    // 인증 관문
-    @GetMapping("/write/{studentId}")
-    public String memberWrite(@PathVariable String studentId,
-                              @RequestParam(name = "password") String password){
-
-        return "redirect:/reloadWrite";
-    }
-
-    @GetMapping("/reloadWrite")
-    public RedirectView reloadWrite(){
-        return new RedirectView("write");
     }
 
     @GetMapping("/write")
@@ -94,15 +79,41 @@ public class CommunityController {
     public String memberComment(
             @PathVariable Integer postNumber,
             @RequestParam(name = "studentId") String studentId,
-            @ModelAttribute("commentform") CommentForm commentForm){
-        log.info("{}", commentForm.getContent());
+            @ModelAttribute("commentform") CommentForm commentForm,
+            HttpServletRequest request){
+
         if(!writeService.commentFormCheck(commentForm)){
             log.info("댓글 내용이 없으면 안 됩니다.");
             return "redirect:/content/" + postNumber +"?studentId=" + studentId;
         }
-        MemberPost memberPost = writeContentService.getMemberPostContent(postNumber, studentId);
-        writeService.uploadComment(commentForm, memberPost);
-        log.info("댓글 등록 완료, 내용 = {}", commentForm.getContent());
+        writeService.uploadComment(commentForm,
+                writeContentService.getMemberPostContent(postNumber, studentId),
+                usingMemberSessionService.getSessionMember
+                        ((Member)request.getSession().getAttribute("loginMember")));
+
+        return "redirect:/content/" + postNumber +"?studentId=" + studentId;
+    }
+
+    @PostMapping("/content/{postNumber}/delete")
+    public String postDelete(
+            @PathVariable Integer postNumber,
+            @RequestParam(name = "studentId") String studentId
+    ){
+        writeService.deleteContent(postNumber,studentId);
+
+
+        return "redirect:/writelist";
+    }
+
+    @PostMapping("/content/{postNumber}/comment/delete")
+    public String commentDelete(
+            @PathVariable Integer postNumber,
+            @RequestParam(name = "studentId") String studentId,
+            @RequestParam(name = "commentId") Long id
+    ){
+        writeService.deleteComment(postNumber, id);
+
+
         return "redirect:/content/" + postNumber +"?studentId=" + studentId;
     }
 
