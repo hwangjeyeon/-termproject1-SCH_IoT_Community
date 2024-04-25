@@ -12,6 +12,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+
+/**
+ *  게시글 기능 서비스 (조회수 증가 등)
+ */
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -29,7 +34,7 @@ public class WriteContentService {
         return memberPosts.get(0);
     }
 
-    //@Transactional
+
     public List<MemberComment> getPostComments(MemberPost memberPost){
         List<MemberComment> memberComments = memberCommentRepository.findByCommentsPost(memberPost);
         return memberComments;
