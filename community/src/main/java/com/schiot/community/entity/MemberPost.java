@@ -47,4 +47,9 @@ public class MemberPost extends BaseEntity{
         postView++;
     }
 
+    public void updateTitleAndContent(String title, String content){
+        this.postTitle = title;
+        this.postContent = content;
+    }
+
 }

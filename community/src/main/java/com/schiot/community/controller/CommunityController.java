@@ -6,6 +6,7 @@ import com.schiot.community.entity.Member;
 import com.schiot.community.entity.MemberComment;
 import com.schiot.community.entity.MemberPost;
 import com.schiot.community.form.CommentForm;
+import com.schiot.community.form.UpdateForm;
 import com.schiot.community.form.WriteForm;
 import com.schiot.community.service.UsingMemberSessionService;
 import com.schiot.community.service.WriteContentService;
@@ -28,6 +29,7 @@ public class CommunityController {
     private final WriteContentService writeContentService;
     private final UsingMemberSessionService usingMemberSessionService;
     private final WriteService writeService;
+
 
     @GetMapping("/writelist")
     public String writeList(Model model, HttpServletRequest request) {
@@ -115,6 +117,29 @@ public class CommunityController {
 
 
         return "redirect:/content/" + postNumber +"?studentId=" + studentId;
+    }
+
+    @GetMapping("/content/{postNumber}/update")
+    public String postUpdate(
+            @PathVariable Integer postNumber,
+            @RequestParam(name = "studentId") String studentId,
+            Model model
+            ){
+        MemberPost memberPost = writeContentService.getMemberPostContent(postNumber, studentId);
+        model.addAttribute("posts",memberPost);
+        model.addAttribute("updateform", new UpdateForm());
+        return "update";
+    }
+
+    @PostMapping("/content/{postNumber}/update")
+    public String postUpdates(
+            @PathVariable Integer postNumber,
+            @RequestParam(name = "studentId") String studentId,
+            @ModelAttribute("updateform") UpdateForm updateForm
+    ){
+        writeService.updateWriteContent(updateForm, postNumber, studentId);
+
+        return "redirect:/content/" + postNumber + "?studentId=" + studentId;
     }
 
 

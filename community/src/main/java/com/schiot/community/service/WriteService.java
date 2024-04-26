@@ -4,10 +4,12 @@ import com.schiot.community.entity.Member;
 import com.schiot.community.entity.MemberComment;
 import com.schiot.community.entity.MemberPost;
 import com.schiot.community.form.CommentForm;
+import com.schiot.community.form.UpdateForm;
 import com.schiot.community.form.WriteForm;
 import com.schiot.community.repository.MemberCommentRepository;
 import com.schiot.community.repository.MemberPostRepository;
 import com.schiot.community.repository.MemberRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -51,6 +53,13 @@ public class WriteService {
                 .postNumber((int)memberPostRepository.count()+1)
                 .build();
         memberPostRepository.save(memberPost);
+    }
+
+    @Transactional
+    public void updateWriteContent(UpdateForm updateForm, Integer postNumber, String studentId){
+        List<MemberPost> posts = memberPostRepository.findByPostNumberAndPostMember_StudentId(postNumber, studentId);
+        MemberPost memberPost = posts.get(0);
+        memberPost.updateTitleAndContent(updateForm.getTitle(), updateForm.getContent());
     }
 
     public boolean commentFormCheck(CommentForm form){

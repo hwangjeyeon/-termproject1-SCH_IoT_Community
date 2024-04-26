@@ -115,7 +115,6 @@
             cursor: pointer;
         }
         header #update{
-            display: inline-;
             background-color: #1dad00;
             border: none;
             color: white;
@@ -163,7 +162,7 @@
     <header>
         <h1>SCH-IoT 커뮤니티 - <span id="Title" th:text="${posts.postTitle}">게시글 제목</span></h1>
         <div th:if="${member.studentId eq posts.postMember.studentId}">
-            <button id='update' th:onclick="|location.href='@{/update}'|">수정하기</button>
+            <button id='update' th:onclick="|location.href='@{/content/{postNumber}/update(postNumber=${posts.postNumber},studentId=${posts.postMember.studentId})}'|">수정하기</button>
             <form id="deleteForm" th:action="@{/content/{postNumber}/delete(postNumber=${posts.postNumber},studentId=${posts.postMember.studentId})}" method="post">
                 <button type="submit" id="delete">삭제하기</button>
             </form>
