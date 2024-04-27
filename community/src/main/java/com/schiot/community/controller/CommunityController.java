@@ -139,7 +139,7 @@ public class CommunityController {
     ){
         if(!writeService.updateFormCheck(updateForm)){
             log.info("빈 내용으로는 수정할 수 없습니다..");
-            return "redirect:/content/" + postNumber +"?studentId=" + studentId + "&updatefail";
+            return "redirect:/content/" + postNumber + "/update?studentId=" + studentId + "&updatefail";
         }
 
         writeService.updateWriteContent(updateForm, postNumber, studentId);
