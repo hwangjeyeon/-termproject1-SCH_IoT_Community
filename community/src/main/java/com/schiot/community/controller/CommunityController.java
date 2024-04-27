@@ -70,7 +70,7 @@ public class CommunityController {
                          HttpServletRequest request){
         if(!writeService.writeFormCheck(writeForm)){
             log.info("내용이 없으면 안 됩니다.");
-            return "redirect:/write";
+            return "redirect:/write?writefail";
         }
         writeService.uploadWriteContent(writeForm, usingMemberSessionService.
                 getSessionMember((Member)request.getSession().getAttribute("loginMember")));
@@ -86,7 +86,7 @@ public class CommunityController {
 
         if(!writeService.commentFormCheck(commentForm)){
             log.info("댓글 내용이 없으면 안 됩니다.");
-            return "redirect:/content/" + postNumber +"?studentId=" + studentId;
+            return "redirect:/content/" + postNumber +"?studentId=" + studentId +"&commentfail";
         }
         writeService.uploadComment(commentForm,
                 writeContentService.getMemberPostContent(postNumber, studentId),
@@ -137,6 +137,11 @@ public class CommunityController {
             @RequestParam(name = "studentId") String studentId,
             @ModelAttribute("updateform") UpdateForm updateForm
     ){
+        if(!writeService.updateFormCheck(updateForm)){
+            log.info("빈 내용으로는 수정할 수 없습니다..");
+            return "redirect:/content/" + postNumber +"?studentId=" + studentId + "&updatefail";
+        }
+
         writeService.updateWriteContent(updateForm, postNumber, studentId);
 
         return "redirect:/content/" + postNumber + "?studentId=" + studentId;

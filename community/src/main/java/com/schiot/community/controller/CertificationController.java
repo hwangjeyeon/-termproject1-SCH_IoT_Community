@@ -39,7 +39,7 @@ public class CertificationController {
     @PostMapping("/login")
     public String login(@ModelAttribute("loginform") LoginForm loginForm, HttpServletRequest request) {
         if(!loginService.loginCheckService(loginForm)){
-            return "redirect:/login";
+            return "redirect:/login?loginfail";
         }
 
         HttpSession session = request.getSession();
@@ -59,7 +59,7 @@ public class CertificationController {
     public String register(@ModelAttribute("registerForm") RegisterForm registerForm){
         log.info("{} {}",registerForm.getMemberId(),registerForm.getMemberPassword());
         if(!registerService.RegisterCheck(registerForm)){
-            return "redirect:/register";
+            return "redirect:/register?registerfail";
         }
         log.info("{} 등록", registerForm.getStudentId());
         return "redirect:/login";

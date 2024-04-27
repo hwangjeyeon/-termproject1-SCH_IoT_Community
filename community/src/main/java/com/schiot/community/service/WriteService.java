@@ -26,13 +26,19 @@ import java.util.List;
 @Slf4j
 public class WriteService {
 
-    private final MemberRepository memberRepository;
     private final MemberPostRepository memberPostRepository;
     private final MemberCommentRepository memberCommentRepository;
 
     public boolean writeFormCheck(WriteForm form){
         if(form.getContent() == null || form.getTitle() == null
-                || form.getContent().isEmpty() || form.getTitle().isEmpty()
+                || form.getContent().isBlank() || form.getTitle().isBlank()){
+            return false;
+        }
+        return true;
+    }
+
+    public boolean updateFormCheck(UpdateForm form){
+        if(form.getContent() == null || form.getTitle() == null
                 || form.getContent().isBlank() || form.getTitle().isBlank()){
             return false;
         }
@@ -40,10 +46,7 @@ public class WriteService {
     }
 
 
-    /**
-     * 일단 단방향으로만 저장했는데, 유저에서 게시글 정보 참조할 때, 잘 가져올지는 의문.
-     * 과제 제출 후 추가 학습때 유저 정보 조회 기능 구현할때 확인해볼 예정
-     */
+
     public void uploadWriteContent(WriteForm writeForm, Member member){
         List<MemberPost> memberPosts = memberPostRepository.findAll();
         int big = 0;
@@ -70,7 +73,6 @@ public class WriteService {
 
     public boolean commentFormCheck(CommentForm form){
         if(form.getContent() == null
-                || form.getContent().isEmpty()
                 || form.getContent().isBlank()){
             return false;
         }
