@@ -39,7 +39,7 @@ public class MemberPost extends BaseEntity{
     private Member postMember;
 
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy="commentsPost", fetch = FetchType.LAZY, cascade = CascadeType.ALL,orphanRemoval = true)
     private List<MemberComment> postComment;
 
 
