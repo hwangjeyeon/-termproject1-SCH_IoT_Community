@@ -51,6 +51,15 @@
     button[type="submit"] {
         background-color: #28a745;
     }
+
+        .back-button {
+            padding: 10px 20px;
+            background-color: #6c757d; /* 회색으로 변경 */
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            vertical-align: top; /* 버튼을 submit 버튼과 수직 정렬되도록 설정 */
+        }
     </style>
 </head>
 <body>
@@ -81,6 +90,8 @@
             </select>
         </div>
         <button type="submit">가입</button>
+        <button type="button" class="back-button"
+                th:onclick="|location.href='@{/login}'|">뒤로가기</button>
     </form>
 
 </body>
