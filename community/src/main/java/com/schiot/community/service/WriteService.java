@@ -45,12 +45,18 @@ public class WriteService {
      * 과제 제출 후 추가 학습때 유저 정보 조회 기능 구현할때 확인해볼 예정
      */
     public void uploadWriteContent(WriteForm writeForm, Member member){
+        List<MemberPost> memberPosts = memberPostRepository.findAll();
+        int big = 0;
+        for (int i = 0; i < memberPosts.size(); i++) {
+            big = (int)Math.max(big, memberPosts.get(i).getId());
+        }
+
         MemberPost memberPost = MemberPost.builder()
                 .postMember(member)
                 .postContent(writeForm.getContent())
                 .postTitle(writeForm.getTitle())
                 .postView(0)
-                .postNumber((int)memberPostRepository.count()+1)
+                .postNumber(big+1)
                 .build();
         memberPostRepository.save(memberPost);
     }
