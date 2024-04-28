@@ -18,8 +18,22 @@ SCH_IoT학과 학생들을 위한 커뮤니티 이므로, 로그인 인증된 �
 ### 커뮤니티 페이지 글 작성
 사용자 역시 커뮤니티 페이지에 글을 작성할 수 있습니다
 
-## 페이지 접속 순서도
+## 페이지 접속 Flowchart
 <img src="/plan_image/프로젝트 페이지 순서도.jpg">
+
+## 기능별 화면 구성
+
+### 로그인 화면 구성 / 회원가입 화면 구성
+
+<img src="/plan_image/화면구성1.jpg">
+
+### 게시글 목록 화면 구성 / 특정 게시글 화면 구성 / 게시글 작성 화면 구성 / 게시글 수정 화면 구성
+<img src="/plan_image/화면구성2.jpg">
+
+
+## 인증 Sequence Diagram
+로그인 인증 안 되어있는 사용자가 로그인/회원가입 페이지 외에 접근할 시, 인터셉터가 차단하는 Sequence Diagram
+<img src="/plan_image/인증 순서도.jpg">
 
 
 ## 클래스 다이어그램
@@ -31,30 +45,57 @@ SCH_IoT학과 학생들을 위한 커뮤니티 이므로, 로그인 인증된 �
 
 3개의 테이블 모두 양방향 연관관계입니다.
 
+
+
+
 ## endpoint
 
 ### 기본 endpoint
 "sch/iot/community/" 해당 endpoint를 기준으로 모든 페이지 endpoint가 시작됩니다
 
 ### 로그인
-GET "login"
+GET "/login"
 
 ### 회원가입
-GET "register"
-POST "register"
+GET "/register"
+POST "/register"
 
 ### 게시글 목록
-GET lists
+GET "/writelist"
+
+### 로그아웃
+GET "/logout"
 
 ## 특정 게시글 확인
-GET lists/{게시글 번호}
+GET "/content/{게시글 번호}?학번"
 
 ### 게시글 작성
-GET post/write
-POST post/write
+GET "/write"
+POST "/write"
+
+### 게시글 수정
+GET "/content/{게시글 번호}/update?학번"
+POST "/content/{게시글 번호}/update?학번"
+
+### 게시글 삭제
+POST "/content/{postNumber}/delete"
 
 ### 댓글 작성
-POST lists/{게시글 번호}/comment/write
+POST "/lists/{게시글 번호}/comment"
+
+### 댓글 삭제
+POST "/lists/{게시글 번호}/comment/delete"
+
+### 게시글 조회수 기능
+
+
+### Form 조건 위반
+다음과 같은 파라미터가 추가로 븥는다
+login: loginfail
+register: registerfail
+update: updatefail
+comment: commentfail
+
 
 ## 사용 기술 스택
 - openJDK 17
@@ -63,7 +104,7 @@ POST lists/{게시글 번호}/comment/write
 - Thymeleaf
 
 ## 사용 DB
-- MYSQL
+- MYSQL 
 
 ## 기타사항
 - 최초 버전은 1.0버전으로 시작하며, 추후 여러 기능 추가 및 리팩토링이 진행되면서 버전이 업그레이드 될 수도 있습니다.
